@@ -1,0 +1,10 @@
+{
+  "accounts": [
+    {
+      "email": "user@example.com",
+      "refreshToken": "your_refresh_token_here",
+      "projectId": "your-gcp-project-id"
+    }
+  ],
+  "strategy": "hybrid"
+}

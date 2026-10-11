@@ -1,0 +1,61 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+pnpm-debug.log*
+
+# Compiled binaries and native artifacts
+*.exe
+*.dll
+*.pdb
+*.msi
+*.dylib
+*.so
+
+# Build outputs
+**/dist/
+**/dist-web/
+**/build/
+**/target/
+
+# Assets and screenshots
+**/screenshots/
+screenshots/
+*.png.bak
+
+# Logs & Network Traces
+*.log
+logs/
+*.etl
+
+# Environment and sensitive data
+.env
+.env.*
+!.env.example
+/data/*
+!/data/.gitkeep
+!/data/*.example.json
+
+# Local inspection, debug, and backup artifacts
+.antigravity-inspect/
+*.old
+*.bak
+.cache/
+.temp/
+tmp/
+
+# OS and Editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/

@@ -1,0 +1,59 @@
+name: Release Build
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-tauri:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+          cache-dependency-path: "gui/pnpm-lock.yaml"
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: gui/src-tauri
+
+      - name: Install Frontend Dependencies
+        run: |
+          cd gui
+          pnpm install --frozen-lockfile
+
+      - name: Build Frontend
+        run: |
+          cd gui
+          pnpm build
+
+      - name: Build Tauri Desktop Client
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          projectPath: "./gui"
+          tagName: v__VERSION__
+          releaseName: "Antigravity Proxy v__VERSION__"
+          releaseBody: "Antigravity Proxy 自动化构建产物发布。包含 Windows 原生安装包 (.exe / NSIS) 与完整管理客户端。"
+          releaseDraft: false
+          prerelease: false
